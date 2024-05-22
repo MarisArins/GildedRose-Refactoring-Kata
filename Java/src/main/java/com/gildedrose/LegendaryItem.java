@@ -7,16 +7,16 @@ class LegendaryItem extends NormalUpdatableItem {
 
     @Override
     public void updateQuality() {
-        // Sulfuras does not change in quality
+        // LegendaryItem does not change in quality
     }
 
     @Override
     public void updateSellIn() {
-        // Sulfuras does not change sellIn
+        // LegendaryItem does not change sellIn
     }
 
     @Override
     public void handleExpired() {
-        // Sulfuras does not expire
+        // LegendaryItem does not expire
     }
 }
