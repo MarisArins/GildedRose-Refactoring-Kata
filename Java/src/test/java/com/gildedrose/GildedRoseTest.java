@@ -8,11 +8,11 @@ class GildedRoseTest {
 
     @Test
     void testSulfurasAlways80Quality() {
-        Item[] items = new Item[] { ItemFactory.createItem("Sulfuras, Hand of Ragnaros", 3, 80) };
+        Item[] items = new Item[]{new LegendaryItem("Sulfuras, Hand of Ragnaros", 3, 80)};
         GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
         //never has to be sold
         assertEquals(3, app.items[0].sellIn);
         //never decreases quality
@@ -21,14 +21,14 @@ class GildedRoseTest {
 
     @Test
     void testAgedBrieIncreasesQuality() {
-        Item[] items = new Item[] {
-            ItemFactory.createItem("Aged Brie", 3, 10),
-            ItemFactory.createItem("Aged Brie", 1, 10)
+        Item[] items = new Item[]{
+            new AgedItem("Aged Brie", 3, 10),
+            new AgedItem("Aged Brie", 1, 10)
         };
         GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
         assertEquals(0, app.items[0].sellIn);
         // increase by 1:1:1
         assertEquals(13, app.items[0].quality);
@@ -40,16 +40,16 @@ class GildedRoseTest {
 
     @Test
     void testAgedBrieIncreasesQualityUpTo50() {
-        Item[] items = new Item[] {
-            ItemFactory.createItem("Aged Brie", 3, 48),
-            ItemFactory.createItem("Backstage passes to a TAFKAL80ETC concert", 5, 40),
-            ItemFactory.createItem("Crystal Sword", 6, 48)};
+        Item[] items = new Item[]{
+            new AgedItem("Aged Brie", 3, 48),
+            new BackstagePass("Backstage passes to a TAFKAL80ETC concert", 5, 40),
+            new RegularItem("Crystal Sword", 6, 48)};
         GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
         assertEquals(-2, app.items[0].sellIn);
         // increase by 1:1:0:0:0
         assertEquals(50, app.items[0].quality);
@@ -65,11 +65,11 @@ class GildedRoseTest {
 
     @Test
     void testRandomItemDecreasesQuality() {
-        Item[] items = new Item[] { ItemFactory.createItem("Crystal Sword", 5, 25) };
+        Item[] items = new Item[]{new RegularItem("Crystal Sword", 5, 25)};
         GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
         assertEquals(2, app.items[0].sellIn);
         //  reducing by 1:1:1
         assertEquals(22, app.items[0].quality);
@@ -77,11 +77,11 @@ class GildedRoseTest {
 
     @Test
     void testRandomItemDecreasesQuality2xFasterAfterDueDate() {
-        Item[] items = new Item[] { ItemFactory.createItem("Crystal Sword", 1, 25) };
+        Item[] items = new Item[]{new RegularItem("Crystal Sword", 1, 25)};
         GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
         assertEquals(-2, app.items[0].sellIn);
         //  reducing by 1:2:2
         assertEquals(20, app.items[0].quality);
@@ -89,13 +89,13 @@ class GildedRoseTest {
 
     @Test
     void testQualityNeverIsNegative() {
-        Item[] items = new Item[] { ItemFactory.createItem("Crystal Sword", 1, 5) };
+        Item[] items = new Item[]{new RegularItem("Crystal Sword", 1, 5)};
         GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
         assertEquals(-4, app.items[0].sellIn);
         //  reducing by 1:2:2:0:0
         assertEquals(0, app.items[0].quality);
@@ -103,21 +103,21 @@ class GildedRoseTest {
 
     @Test
     void testBackstagePass0QualityAfterConcert() {
-        Item[] items = new Item[] {ItemFactory.createItem("Backstage passes to a TAFKAL80ETC concert", 3, 20)};
+        Item[] items = new Item[]{new BackstagePass("Backstage passes to a TAFKAL80ETC concert", 3, 20)};
         GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
         assertEquals(0, app.items[0].sellIn);
         // increase by 3:3:3
         assertEquals(29, app.items[0].quality);
 
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(-1, app.items[0].sellIn);
         // set to 0
         assertEquals(0, app.items[0].quality);
 
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(-2, app.items[0].sellIn);
         // set to 0
         assertEquals(0, app.items[0].quality);
@@ -125,14 +125,14 @@ class GildedRoseTest {
 
     @Test
     void testBackstagePassQualityIncreasePatterns() {
-        Item[] items = new Item[] {
-            ItemFactory.createItem("Backstage passes to a TAFKAL80ETC concert", 12, 20),
-            ItemFactory.createItem("Backstage passes to a TAFKAL80ETC concert", 7, 20)
+        Item[] items = new Item[]{
+            new BackstagePass("Backstage passes to a TAFKAL80ETC concert", 12, 20),
+            new BackstagePass("Backstage passes to a TAFKAL80ETC concert", 7, 20)
         };
         GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
         assertEquals(9, app.items[0].sellIn);
         // increase by 1:1:2
         assertEquals(24, app.items[0].quality);
@@ -144,14 +144,14 @@ class GildedRoseTest {
 
     @Test
     void testConjuredItemDecreasesQuality() {
-        Item[] items = new Item[] {
-            ItemFactory.createItem("Conjured Mana Cake", 5, 25),
-            ItemFactory.createItem("Conjured Mana Cake", 5, 5)
+        Item[] items = new Item[]{
+            new ConjuredItem("Conjured Mana Cake", 5, 25),
+            new ConjuredItem("Conjured Mana Cake", 5, 5)
         };
         GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
         assertEquals(2, app.items[0].sellIn);
         //  reducing by 2:2:2
         assertEquals(19, app.items[0].quality);
@@ -163,14 +163,14 @@ class GildedRoseTest {
 
     @Test
     void testConjuredItemDecreasesQuality2xFasterAfterDueDate() {
-        Item[] items = new Item[] {
-            ItemFactory.createItem("Conjured Mana Cake", 1, 25),
-            ItemFactory.createItem("Conjured Mana Cake", 1, 5)
+        Item[] items = new Item[]{
+            new ConjuredItem("Conjured Mana Cake", 1, 25),
+            new ConjuredItem("Conjured Mana Cake", 1, 5)
         };
         GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
         assertEquals(-2, app.items[0].sellIn);
         //  reducing by 2:4:4
         assertEquals(15, app.items[0].quality);

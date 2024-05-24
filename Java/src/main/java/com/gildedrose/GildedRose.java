@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import java.util.Arrays;
+
 class GildedRose {
     Item[] items;
 
@@ -7,12 +9,9 @@ class GildedRose {
         this.items = items;
     }
 
-    public void updateQuality() {
-        for (Item item : items) {
-            NormalUpdatableItem updatableItem = (NormalUpdatableItem)item;
-            updatableItem.updateQuality();
-            updatableItem.updateSellIn();
-            updatableItem.handleExpired();
-        }
+    public void updateInventory() {
+        Arrays.stream(items)
+            .map(RegularItem.class::cast)
+            .forEach(RegularItem::updateItem);
     }
 }

@@ -5,16 +5,16 @@ public class TexttestFixture {
         System.out.println("OMGHAI!");
 
         Item[] items = new Item[] {
-            ItemFactory.createItem("+5 Dexterity Vest", 10, 20),
-            ItemFactory.createItem("Aged Brie", 2, 0), //
-            ItemFactory.createItem("Elixir of the Mongoose", 5, 7), //
-            ItemFactory.createItem("Sulfuras, Hand of Ragnaros", 0, 80), //
-            ItemFactory.createItem("Sulfuras, Hand of Ragnaros", -1, 80),
-            ItemFactory.createItem("Backstage passes to a TAFKAL80ETC concert", 15, 20),
-            ItemFactory.createItem("Backstage passes to a TAFKAL80ETC concert", 10, 49),
-            ItemFactory.createItem("Backstage passes to a TAFKAL80ETC concert", 5, 49),
+            new RegularItem("+5 Dexterity Vest", 10, 20),
+            new AgedItem("Aged Brie", 2, 0), //
+            new RegularItem("Elixir of the Mongoose", 5, 7), //
+            new LegendaryItem("Sulfuras, Hand of Ragnaros", 0, 80), //
+            new LegendaryItem("Sulfuras, Hand of Ragnaros", -1, 80),
+            new BackstagePass("Backstage passes to a TAFKAL80ETC concert", 15, 20),
+            new BackstagePass("Backstage passes to a TAFKAL80ETC concert", 10, 49),
+            new BackstagePass("Backstage passes to a TAFKAL80ETC concert", 5, 49),
                 // this conjured item does not work properly yet - fixed !!!
-            ItemFactory.createItem("Conjured Mana Cake", 3, 6) };
+            new ConjuredItem("Conjured Mana Cake", 3, 6) };
 
         GildedRose app = new GildedRose(items);
 
@@ -30,7 +30,7 @@ public class TexttestFixture {
                 System.out.println(item);
             }
             System.out.println();
-            app.updateQuality();
+            app.updateInventory();
         }
     }
 
